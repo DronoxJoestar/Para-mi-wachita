@@ -75,16 +75,14 @@ body {
 
 <body>
 
-<button id="boton" onclick="iniciar()">????</button>
+<button id="boton" onclick="iniciar()">💖 Presióname 💖</button>
 
 <div id="contenido">
   <div id="mensaje"></div>
 </div>
 
-<!-- Música -->
-<audio id="musica" loop>
-  <source src="musica.mp3" type="audio/mpeg">
-</audio>
+<!-- AUDIO (forma segura) -->
+<audio id="musica" src="musica.mp3" preload="auto" loop></audio>
 
 <script>
 const fondos = [
@@ -109,7 +107,15 @@ function iniciar() {
 
   escribirTexto();
 
-  document.getElementById("musica").play();
+  const musica = document.getElementById("musica");
+
+  // 🔊 reproducir seguro
+  musica.volume = 0.5;
+  musica.play().catch(() => {
+    document.body.addEventListener("click", () => {
+      musica.play();
+    }, { once: true });
+  });
 
   crearCorazones();
 }
