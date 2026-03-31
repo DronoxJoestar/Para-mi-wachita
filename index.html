@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para ti 💖</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: purple;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Botón */
+#boton {
+  background: white;
+  color: black;
+  padding: 20px 40px;
+  font-size: 26px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#boton:hover {
+  transform: scale(1.1);
+}
+
+/* Contenido */
+#contenido {
+  display: none;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-size: cover;
+  background-position: center;
+  color: white;
+  text-align: center;
+}
+
+/* Mensaje */
+#mensaje {
+  margin-top: 25%;
+  font-size: 22px;
+  background: rgba(0,0,0,0.5);
+  padding: 20px;
+  border-radius: 20px;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Corazones */
+.corazon {
+  position: absolute;
+  color: pink;
+  animation: flotar 5s linear infinite;
+}
+
+@keyframes flotar {
+  0% { transform: translateY(100vh); opacity: 1;}
+  100% { transform: translateY(-10vh); opacity: 0;}
+}
+</style>
+</head>
+
+<body>
+
+<button id="boton" onclick="iniciar()">????</button>
+
+<div id="contenido">
+  <div id="mensaje"></div>
+</div>
+
+<!-- Música -->
+<audio id="musica" loop>
+  <source src="musica.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const fondos = [
+  "IMG-20240722-WA0020.jpg",
+  "20241031_185111.jpg",
+  "IMG-20241130-WA0010.jpg",
+  "IMG-20241207-WA0001.jpg",
+  "20250214_185922.jpg"
+];
+
+const texto = "Muchas gracias por tanto tiempo a mi lado y aprecio demasiado que seas la personita indicada que me acompañe todos estos añitos y te amo tanto mi niña 💖";
+
+let index = 0;
+
+function iniciar() {
+  document.getElementById("boton").style.display = "none";
+  const contenido = document.getElementById("contenido");
+  contenido.style.display = "block";
+
+  cambiarFondo();
+  setInterval(cambiarFondo, 4000);
+
+  escribirTexto();
+
+  document.getElementById("musica").play();
+
+  crearCorazones();
+}
+
+function cambiarFondo() {
+  const random = fondos[Math.floor(Math.random() * fondos.length)];
+  document.getElementById("contenido").style.backgroundImage = `url(${random})`;
+}
+
+function escribirTexto() {
+  if (index < texto.length) {
+    document.getElementById("mensaje").innerHTML += texto.charAt(index);
+    index++;
+    setTimeout(escribirTexto, 40);
+  }
+}
+
+function crearCorazones() {
+  setInterval(() => {
+    const corazon = document.createElement("div");
+    corazon.className = "corazon";
+    corazon.innerHTML = "💖";
+    corazon.style.left = Math.random() * 100 + "vw";
+    corazon.style.fontSize = (Math.random() * 20 + 10) + "px";
+    document.body.appendChild(corazon);
+
+    setTimeout(() => {
+      corazon.remove();
+    }, 5000);
+  }, 300);
+}
+</script>
+
+</body>
+</html>
